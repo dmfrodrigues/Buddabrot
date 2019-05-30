@@ -1,0 +1,6 @@
+Time and date: ???
+Time elapsed: ??? seconds
+Re(c) = -1.7691884753108020334
+Im(c) = 0.0035653501749039130837
+Zoom: 67108864
+Number of iterations: 4340

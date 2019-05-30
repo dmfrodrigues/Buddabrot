@@ -1,0 +1,8 @@
+timedate	19-May-2019 19:07:51
+timeelapsed	0
+re(c)	-1.25
+im(c)	0
+zoom	1
+size.x	1150
+size.y	500
+NumIt	36100
