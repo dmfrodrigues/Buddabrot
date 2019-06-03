@@ -1,16 +1,16 @@
 #include <wx/wx.h>
 #include "FractalFrame.h"
-#include "Mandelbrot.h"
+#include "Buddhabrot.h"
 
 ///MyApp will be our inherited wxApp
 class FractalApp: public wxApp{
 private:
     FractalFrame *fractalFrame;
-    mb *f;
+    bb *f;
 public:
     virtual bool OnInit(){
         wxInitAllImageHandlers();
-        f = new mb();
+        f = new bb(100000, 10000); //addPt, numIt
         fractalFrame = new FractalFrame(f);
         fractalFrame->Show(true);
         return true;

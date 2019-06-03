@@ -1,7 +1,0 @@
-Time and date: 06-Apr-2018 01:07:31
-Time elapsed: 49.396452 seconds
-Re(c) = -1.7689432227258599095
-Im(c) = 0.0028313476775237234398
-Zoom: 1672186200000
-Image dimensions: 5000x3000
-Number of iterations: 10000

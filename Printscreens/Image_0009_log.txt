@@ -1,6 +1,0 @@
-Time and date: 04-Apr-2018 00:06:13
-Time elapsed: 0.0000000000 seconds
-Re(c) = -5.00000000000000000000e-001
-Im(c) = +0.00000000000000000000e+000
-Zoom: 1
-Number of iterations: 5630

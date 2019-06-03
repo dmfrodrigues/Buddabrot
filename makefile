@@ -17,10 +17,10 @@ makefolders:
 	mkdir -p obj
 	mkdir -p bin
 
-$(BDIR)/main.exe:                       $(ODIR)/Mandelbrot.o $(ODIR)/FractalApp.o
-	$(CC) -o $(BDIR)/main.exe $(ODIR)/Mandelbrot.o $(ODIR)/FractalApp.o $(LFLAGS) -s -mthreads -lwxmsw30u -mwindows
-$(ODIR)/Mandelbrot.o:          $(SDIR)/Mandelbrot.cpp
-	$(CC) $(CFLAGS)            $(SDIR)/Mandelbrot.cpp          -o $(ODIR)/Mandelbrot.o
+$(BDIR)/main.exe:                       $(ODIR)/Buddhabrot.o $(ODIR)/FractalApp.o
+	$(CC) -o $(BDIR)/main.exe $(ODIR)/Buddhabrot.o $(ODIR)/FractalApp.o $(LFLAGS) -s -mthreads -lwxmsw30u -mwindows
+$(ODIR)/Buddhabrot.o:          $(SDIR)/Buddhabrot.cpp
+	$(CC) $(CFLAGS)            $(SDIR)/Buddhabrot.cpp          -o $(ODIR)/Buddhabrot.o
 $(ODIR)/FractalApp.o:          $(SDIR)/FractalApp.cpp
 	$(CC) $(CFLAGS)            $(SDIR)/FractalApp.cpp          -o $(ODIR)/FractalApp.o
 
