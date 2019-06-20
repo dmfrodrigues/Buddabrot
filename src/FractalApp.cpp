@@ -10,10 +10,13 @@ private:
 public:
     virtual bool OnInit(){
         wxInitAllImageHandlers();
-        f = new bb(100000, 10000); //addPt, numIt
+        f = new bb(250000, 10000); //addPt, numIt
         fractalFrame = new FractalFrame(f);
         fractalFrame->Show(true);
         return true;
+    }
+    int OnExit(){
+        if(f!=NULL) delete f;
     }
 };
 ///MACRO - "main" function
