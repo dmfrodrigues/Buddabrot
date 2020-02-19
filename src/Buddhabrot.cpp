@@ -39,10 +39,15 @@ void bb::New(ComplexNum o, ComplexT st, wxSize s, bool IsCenter){
 
 
 
+
+
+
+
+
 }
 
 ///CreateNew
-bb* bb::CreateNew(ComplexNum o, ComplexT st, wxSize s, bool IsCenter){
+bb* bb::CreateNew(ComplexNum o, ComplexT st, wxSize s, bool IsCenter) const{
     bb *ret = new bb(addPt, NumIt);
     ret->New(o,st,s,IsCenter);
     return ret;
