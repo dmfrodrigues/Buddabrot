@@ -14,7 +14,7 @@ private:
     typedef float ColorT;
 
     ///PRIVATE STATIC CONSTANTS
-    static const ComplexT w;
+    static const complex_t w;
     static const ComplexNum orig;
 
 
@@ -25,30 +25,29 @@ private:
 
 
 
-    static const ComplexT bailout;
-    static const ComplexT bailout_sqr;
+    static constexpr complex_t bailout = 8.0L;
+    static constexpr complex_t bailout_sqr = bailout*bailout;
 
 
     static constexpr unsigned NThreads = 4;
 
     ///MEMBER VARIABLES
-    ComplexT                step;   ///Difference between consecutive pixels
-    ComplexNum              origin; ///Upper-left corner
-    ComplexNum              center; ///Center of the fractal
-    IterationT              numPt=0;///Total number of iterations performed over the fractal
-    const IterationT        addPt;
-    const IterationT        NumIt;
+    wxNativePixelData       px;     ///PixelData, to access bmp
+    iter_t                  numPt=0;///Total number of iterations performed over the fractal
     long                    *seeds = NULL; //seeds for random numbers
     ComplexNum              **z = NULL;
-    std::atomic<IterationT> *NUM=NULL;    ///Number of iterations
+    std::atomic<iter_t>     *NUM=NULL;    ///Number of iterations
     unsigned                *X=NULL;        //array to sort pixels
-    wxNativePixelData       px;     ///PixelData, to access bmp
+    const iter_t            addPt;
+    const iter_t            NumIt;
+    mutable std::mutex  Mutex;
+
 
     ///PRIVATE FUNCTIONS
     /**
      * Update pixels in [L,R) by making an additional addIt iterations
      */
-    void UpdateMathLim(unsigned index, IterationT addPt);
+    void UpdateMathLim(unsigned index, iter_t addPt);
     /**
      * Update pixels whose indexes are in q, based on the information in the variables
      */
@@ -62,42 +61,34 @@ private:
 
     ///PRIVATE STATIC FUNCTIONS
     static inline bool isCardioid_isPeriod2Bulb(const ComplexNum& c){
-        ComplexT q = (c.real()-ComplexT(0.25L))*(c.real()-ComplexT(0.25L)) + c.imag()*c.imag();    ///isCardioid
-        return (ComplexT(4.0L)*q*(q+(c.real()-ComplexT(0.25L))) < c.imag()*c.imag())||       ///isCardioid
-               ((c.real()+ComplexT(1.0L))*(c.real()+ComplexT(1.0L)) + c.imag()*c.imag() < ComplexT(0.0625L)); ///isPeriod2Bulb
+        complex_t q = (c.real()-complex_t(0.25L))*(c.real()-complex_t(0.25L)) + c.imag()*c.imag();    ///isCardioid
+        return (complex_t(4.0L)*q*(q+(c.real()-complex_t(0.25L))) < c.imag()*c.imag())||       ///isCardioid
+               ((c.real()+complex_t(1.0L))*(c.real()+complex_t(1.0L)) + c.imag()*c.imag() < complex_t(0.0625L)); ///isPeriod2Bulb
     }
 
 public:
     /**
      * Constructor
      */
-    bb(IterationT addPoint, IterationT numberIt);
-    /**
-     * New
-     */
-    void New(ComplexNum o, ComplexT st, wxSize s, bool IsCenter = false);
-    /**
-     * CreateNew
-     */
-    bb* CreateNew(ComplexNum o, ComplexT st, wxSize s, bool IsCenter = false) const;
-    /**
-     * Destructor
-     */
+    bb(iter_t addPoint, iter_t numberIt);
+
+    bb(const bb &p);
+
+    void Create(ComplexNum o, complex_t st, wxSize s) override;
+
+    bb* Clone() const override;
+
     ~bb();
 
     ///CALCULATIONS ==================================================
     /**
      * Update all pixels by making an additional addIt iterations
      */
-    void UpdateMath();
+    void Update();
 
     ///GET FUNCTION ==================================================
-    ComplexNum GetOrigin()         const{ return origin; }
-    ComplexNum GetCenter()         const{ return center; }
-    ComplexT   GetStep()           const{ return step;   }
-    ComplexT   GetHorizontalSize() const{ return step*(ComplexT)GetSize().x; }
-    IterationT GetNum()            const{ return numPt;  }
-    IterationT GetCyclesPerRun()   const{ return addPt;  };
+    iter_t GetNum()            const{ return numPt;  }
+    iter_t GetCyclesPerRun()   const{ return addPt;  };
 
 
     ///OTHER UTILITIES
