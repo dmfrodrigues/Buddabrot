@@ -2,9 +2,6 @@
 *.a
 *.exe
 *.app
-*.jpg
-*.png
-*.bmp
 *.layout
 *.d
 buddhabrot

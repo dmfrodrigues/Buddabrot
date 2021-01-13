@@ -1,0 +1,41 @@
+name: linux-x86_64
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install wxWidgets
+      run: |
+        sudo apt update
+        sudo apt install -y libwxgtk3.0-gtk3-dev
+
+    - name: Checkout submodules
+      shell: bash
+      run: |
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    
+    - name: cmake
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
+
+    - name: Upload zip
+      uses: actions/upload-artifact@v2
+      with:
+        name: buddhabrot-linux-64bit
+        path: |
+          LICENSE
+          README.md
+          buddhabrot
