@@ -13,9 +13,8 @@ const bb::ComplexNum bb::orig(bb::complex_t(-3.0L), bb::complex_t(-3.0L));
 bb::bb(iter_t addPoint, iter_t numberIt):FractalBitmap(),px(*((wxBitmap*)this)),addPt(addPoint),NumIt(numberIt){}
 
 bb::bb(const bb &p):FractalBitmap(),px(*((wxBitmap*)this)),addPt(p.addPt),NumIt(p.NumIt){
-    std::lock_guard<std::mutex> lock(Mutex);
-
     Create(p.GetCenter(), p.GetStep(), p.GetSize());
+    std::lock_guard<std::mutex> lock(Mutex);
     numPt = p.numPt;
     const size_t N = GetWidth()*GetHeight();
     std::copy(p.seeds, p.seeds+N, seeds);
@@ -138,7 +137,7 @@ void bb::UpdatePixels(){
 bool bb::SaveFile(const wxString& name, wxBitmapType type, const wxPalette *palette) const{
     std::lock_guard<std::mutex> lock(Mutex);
 
-    wxBitmap::SaveFile(name, type, palette);
+    wxBitmap::SaveFile(name+".png", type, palette);
 
     std::ofstream ostrm(name.ToStdString() + ".txt");
 
